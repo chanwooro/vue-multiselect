@@ -22,16 +22,15 @@ function filterOptions (options, search, label, customLabel) {
 }
 
 function hiarchyOptions (options, search, label, target, customLabel){
-
-  let optionValue = options.reduce((x, _y) => {
-    if(_y[target].filter(_i => includes(customLabel(_i), search)).length > 0){
+  const _arr = options.reduce((x, _y) => {
+    if((target && _y[target] && _y[target].filter(_i => includes(customLabel(_i), search)).length > 0) || includes(customLabel(_y, label), search)){
       return x.concat(_y)
     }else{
       return x;
     }
   }, [])
   // options.filter(_opt => _opt[target].filter(x => customContains(x, search)))
-  return optionValue
+  return _arr;
 }
 
 function customContains(option, value){
