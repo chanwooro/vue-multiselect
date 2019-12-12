@@ -21,6 +21,24 @@ function filterOptions (options, search, label, customLabel) {
   return options.filter(option => includes(customLabel(option, label), search))
 }
 
+function hiarchyOptions (options, search, label, target, customLabel){
+
+  let optionValue = options.reduce((x, _y) => {
+    if(_y[target].filter(_i => includes(customLabel(_i), search)).length > 0){
+      return x.concat(_y)
+    }else{
+      return x;
+    }
+  }, [])
+  // options.filter(_opt => _opt[target].filter(x => customContains(x, search)))
+  return optionValue
+}
+
+function customContains(option, value){
+  console.log(includes(option, value))
+  return includes(option, value)
+}
+
 function stripGroups (options) {
   return options.filter(option => !option.$isLabel)
 }
@@ -98,6 +116,11 @@ export default {
     multiple: {
       type: Boolean,
       default: false
+    },
+
+    hierachyTarget: {
+      type: String,
+      default: ''
     },
     /**
      * Presets the selected options value.
@@ -341,9 +364,11 @@ export default {
       const normalizedSearch = search.toLowerCase().trim()
 
       let options = this.options.concat()
-
       /* istanbul ignore else */
-      if (this.internalSearch) {
+      if (this.internalSearch && this.hierachyTarget.length > 0){
+        options = hiarchyOptions(options, normalizedSearch, this.label, this.hierachyTarget, this.customLabel);
+      }
+      else if (this.internalSearch) {
         options = this.groupValues
           ? this.filterAndFlat(options, normalizedSearch, this.label)
           : filterOptions(options, normalizedSearch, this.label, this.customLabel)
