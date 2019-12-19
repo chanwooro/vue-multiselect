@@ -6,10 +6,12 @@ div
     track-by="name",
     placeholder="Pick badges",
     :options="badges",
-    :multiple="true",
+    :multiple="false",
     :show-labels="false",
     hierachy-target="keyword",
     :limit="3",
+    :preserve-search="true"
+    :clear-on-select="false"
     @tag="onTagging"
   )
 </template>

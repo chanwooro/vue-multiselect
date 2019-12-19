@@ -521,7 +521,8 @@ export default {
      * @param  {Object||String||Integer} option to select/deselect
      * @param  {Boolean} block removing
      */
-    select (option, key) {
+    select (option, key) {     
+
       /* istanbul ignore else */
       if (option.$isLabel && this.groupSelect) {
         this.selectGroup(option)
@@ -546,6 +547,10 @@ export default {
         if (isSelected) {
           if (key !== 'Tab') this.removeElement(option)
           return
+        }
+
+        if(this.internalSearch && this.hierachyTarget.length && !this.multiple && this.label.length > 0 && this.preserveSearch && !this.clearOnSelect){
+          this.search = option[this.label]
         }
 
         this.$emit('select', option, this.id)
