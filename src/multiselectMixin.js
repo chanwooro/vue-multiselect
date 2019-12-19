@@ -337,6 +337,10 @@ export default {
     preselectFirst: {
       type: Boolean,
       default: false
+    },
+    replacePlaceholder: {
+      type: Boolean,
+      defailt: false
     }
   },
   mounted () {

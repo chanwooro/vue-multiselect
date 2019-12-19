@@ -83,7 +83,7 @@
           @mousedown.prevent="toggle"
         >
           <slot name="placeholder">
-            {{ placeholder }}
+            {{ replacePlaceholder && search.length > 0 ? search : placeholder }}
           </slot>
         </span>
       </div>

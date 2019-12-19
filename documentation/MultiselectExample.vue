@@ -12,6 +12,7 @@ div
     :limit="3",
     :preserve-search="true"
     :clear-on-select="false"
+    :replace-placeholder="true"
     @tag="onTagging"
   )
 </template>
