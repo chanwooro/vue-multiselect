@@ -33,10 +33,6 @@ function hiarchyOptions (options, search, label, target, customLabel){
   return _arr;
 }
 
-function customContains(option, value){
-  console.log(includes(option, value))
-  return includes(option, value)
-}
 
 function stripGroups (options) {
   return options.filter(option => !option.$isLabel)
@@ -549,12 +545,17 @@ export default {
         const isSelected = this.isSelected(option)
 
         if (isSelected) {
-          if (key !== 'Tab') this.removeElement(option)
+          if (key !== 'Tab'){
+            if(this.internalSearch && this.hierachyTarget.length && !this.multiple && this.label.length > 0 && this.preserveSearch && !this.clearOnSelect){
+              this.search = '';
+            }
+            this.removeElement(option)
+          }
           return
         }
 
         if(this.internalSearch && this.hierachyTarget.length && !this.multiple && this.label.length > 0 && this.preserveSearch && !this.clearOnSelect){
-          this.search = option[this.label]
+          this.search = option[this.label];
         }
 
         this.$emit('select', option, this.id)
@@ -683,12 +684,14 @@ export default {
       if (this.groupValues && this.pointer === 0 && this.filteredOptions.length) {
         this.pointer = 1
       }
-
       this.isOpen = true
       /* istanbul ignore else  */
       if (this.searchable) {
         if (!this.preserveSearch) this.search = ''
         this.$nextTick(() => this.$refs.search && this.$refs.search.focus())
+        if(this.$refs.search.setSelectionRange !== undefined) {
+          this.$refs.search.setSelectionRange(this.search.length, this.search.length)
+        }
       } else {
         this.$el.focus()
       }
