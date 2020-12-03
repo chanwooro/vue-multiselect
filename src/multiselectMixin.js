@@ -5,6 +5,7 @@ function isEmpty (opt) {
 }
 
 function not (fun) {
+  console.log("test rebase");
   return (...params) => !fun(...params)
 }
 
