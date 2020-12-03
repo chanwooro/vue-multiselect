@@ -11,6 +11,7 @@ function not (fun) {
 
 function includes (str, query) {
   /* istanbul ignore else */
+  console.log("TEST RUN22")
   if (str === undefined) str = 'undefined'
   if (str === null) str = 'null'
   if (str === false) str = 'false'
